@@ -22,7 +22,7 @@
     [super viewDidLoad];
 
     SharedDocumentHandler *sh = [SharedDocumentHandler sharedDocumentHandler];
-    [sh useDocument];
+    [sh useDocumentWithOperation:NULL];
 
     dispatch_queue_t queue = dispatch_queue_create("Flickr Downloader", NULL);
     dispatch_async(queue, ^{

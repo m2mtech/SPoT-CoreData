@@ -24,7 +24,7 @@
     return _sharedDocumentHandler;
 }
 
-- (void)useDocument
+- (void)useDocumentWithOperation:(void (^)(BOOL))block
 {
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
                                                          inDomains:NSUserDomainMask] lastObject];
@@ -38,15 +38,19 @@
            forSaveOperation:UIDocumentSaveForCreating
           completionHandler:^(BOOL success) {
               self.managedObjectContext = document.managedObjectContext;
+              block(success);
           }];
     } else if (document.documentState == UIDocumentStateClosed) {
         //NSLog(@"open document");
         [document openWithCompletionHandler:^(BOOL success) {
             self.managedObjectContext = document.managedObjectContext;
+            block(success);
         }];
     } else {
         //NSLog(@"use document");
         self.managedObjectContext = document.managedObjectContext;
+        BOOL success = YES;
+        block(success);
     }
 }
 
