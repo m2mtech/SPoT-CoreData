@@ -31,7 +31,7 @@
         photo.title = [photoDictionary[FLICKR_PHOTO_TITLE] description];
         photo.subtitle = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
         photo.imageURL = [[FlickrFetcher urlForPhoto:photoDictionary
-                                              format:FlickrPhotoFormatLarge] absoluteString];
+                                              format:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? FlickrPhotoFormatOriginal : FlickrPhotoFormatLarge] absoluteString];
 
         photo.tags = [Tag tagsFromFlickrInfo:photoDictionary
                       inManagedObjectContext:context];

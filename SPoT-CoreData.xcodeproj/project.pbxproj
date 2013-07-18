@@ -31,6 +31,10 @@
 		5BEF57BA1795779800C814FB /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57B91795779800C814FB /* CoreDataTableViewController.m */; };
 		5BEF57BD1795781300C814FB /* FlickrPhotoTagTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57BC1795781200C814FB /* FlickrPhotoTagTVC.m */; };
 		5BEF57C01795783100C814FB /* NetworkActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57BF1795783100C814FB /* NetworkActivityIndicator.m */; };
+		5BEF57C31796F16500C814FB /* FlickrPhotoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57C21796F16400C814FB /* FlickrPhotoTVC.m */; };
+		5BEF57C61796F74300C814FB /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57C51796F74300C814FB /* ImageViewController.m */; };
+		5BEF57C91796F76000C814FB /* FlickrCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57C81796F76000C814FB /* FlickrCache.m */; };
+		5BEF57CC1797042400C814FB /* Recent+Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEF57CB1797042400C814FB /* Recent+Photo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +79,14 @@
 		5BEF57BC1795781200C814FB /* FlickrPhotoTagTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotoTagTVC.m; sourceTree = "<group>"; };
 		5BEF57BE1795783100C814FB /* NetworkActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkActivityIndicator.h; sourceTree = "<group>"; };
 		5BEF57BF1795783100C814FB /* NetworkActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkActivityIndicator.m; sourceTree = "<group>"; };
+		5BEF57C11796F16400C814FB /* FlickrPhotoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPhotoTVC.h; sourceTree = "<group>"; };
+		5BEF57C21796F16400C814FB /* FlickrPhotoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhotoTVC.m; sourceTree = "<group>"; };
+		5BEF57C41796F74200C814FB /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		5BEF57C51796F74300C814FB /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		5BEF57C71796F76000C814FB /* FlickrCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrCache.h; sourceTree = "<group>"; };
+		5BEF57C81796F76000C814FB /* FlickrCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrCache.m; sourceTree = "<group>"; };
+		5BEF57CA1797042400C814FB /* Recent+Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Recent+Photo.h"; sourceTree = "<group>"; };
+		5BEF57CB1797042400C814FB /* Recent+Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Recent+Photo.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +147,10 @@
 				5BEF57BF1795783100C814FB /* NetworkActivityIndicator.m */,
 				5BEF57BB1795781200C814FB /* FlickrPhotoTagTVC.h */,
 				5BEF57BC1795781200C814FB /* FlickrPhotoTagTVC.m */,
+				5BEF57C11796F16400C814FB /* FlickrPhotoTVC.h */,
+				5BEF57C21796F16400C814FB /* FlickrPhotoTVC.m */,
+				5BEF57C41796F74200C814FB /* ImageViewController.h */,
+				5BEF57C51796F74300C814FB /* ImageViewController.m */,
 				5BEDEF8E16EE162500F38E25 /* FlickrFetcher */,
 				5BEDEF4916EE09FC00F38E25 /* Supporting Files */,
 			);
@@ -173,6 +189,8 @@
 				5BEDEF8C16EE15B600F38E25 /* Photo+Flickr.m */,
 				5BEDEF8516EE152100F38E25 /* Recent.h */,
 				5BEDEF8616EE152100F38E25 /* Recent.m */,
+				5BEF57CA1797042400C814FB /* Recent+Photo.h */,
+				5BEF57CB1797042400C814FB /* Recent+Photo.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -183,6 +201,8 @@
 				5BEDEF8F16EE162500F38E25 /* FlickrAPIKey.h */,
 				5BEDEF9016EE162500F38E25 /* FlickrFetcher.h */,
 				5BEDEF9116EE162500F38E25 /* FlickrFetcher.m */,
+				5BEF57C71796F76000C814FB /* FlickrCache.h */,
+				5BEF57C81796F76000C814FB /* FlickrCache.m */,
 			);
 			path = FlickrFetcher;
 			sourceTree = "<group>";
@@ -268,6 +288,10 @@
 				5BEF57BA1795779800C814FB /* CoreDataTableViewController.m in Sources */,
 				5BEF57BD1795781300C814FB /* FlickrPhotoTagTVC.m in Sources */,
 				5BEF57C01795783100C814FB /* NetworkActivityIndicator.m in Sources */,
+				5BEF57C31796F16500C814FB /* FlickrPhotoTVC.m in Sources */,
+				5BEF57C61796F74300C814FB /* ImageViewController.m in Sources */,
+				5BEF57C91796F76000C814FB /* FlickrCache.m in Sources */,
+				5BEF57CC1797042400C814FB /* Recent+Photo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
