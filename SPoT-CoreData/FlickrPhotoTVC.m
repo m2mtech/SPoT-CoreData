@@ -29,7 +29,7 @@
         
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:self.tag.managedObjectContext
-                                                                              sectionNameKeyPath:nil
+                                                                              sectionNameKeyPath:@"firstLetter"
                                                                                        cacheName:nil];
     } else {
         self.fetchedResultsController = nil;

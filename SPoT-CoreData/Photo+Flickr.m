@@ -29,6 +29,7 @@
                                               inManagedObjectContext:context];
         photo.unique = [photoDictionary[FLICKR_PHOTO_ID] description];
         photo.title = [photoDictionary[FLICKR_PHOTO_TITLE] description];
+        photo.firstLetter = [photo.title substringToIndex:1];
         photo.subtitle = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
         photo.imageURL = [[FlickrFetcher urlForPhoto:photoDictionary
                                               format:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? FlickrPhotoFormatOriginal : FlickrPhotoFormatLarge] absoluteString];
