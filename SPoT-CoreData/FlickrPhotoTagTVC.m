@@ -80,16 +80,17 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(loadPhotosFromFlickr)
-                  forControlEvents:UIControlEventValueChanged];
-    [self loadPhotosFromFlickr];
+                  forControlEvents:UIControlEventValueChanged];    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.sh.managedObjectContext && !self.refreshControl.refreshing)
+    if (!self.sh.managedObjectContext)
         [self.sh useDocumentWithOperation:^(BOOL success) {
         [self setupFetchedResultsController];
+        if (![self.fetchedResultsController.fetchedObjects count])
+            [self loadPhotosFromFlickr];
     }];
 }
 
