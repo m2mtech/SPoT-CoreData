@@ -2,7 +2,7 @@
 //  Photo.h
 //  SPoT-CoreData
 //
-//  Created by Martin Mandl on 11.03.13.
+//  Created by Martin Mandl on 18.07.13.
 //  Copyright (c) 2013 m2m server software gmbh. All rights reserved.
 //
 
@@ -13,13 +13,14 @@
 
 @interface Photo : NSManagedObject
 
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * subtitle;
-@property (nonatomic, retain) NSString * unique;
 @property (nonatomic, retain) NSString * imageURL;
+@property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSData * thumbnail;
-@property (nonatomic, retain) NSSet *tags;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * unique;
+@property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) Recent *recent;
+@property (nonatomic, retain) NSSet *tags;
 @end
 
 @interface Photo (CoreDataGeneratedAccessors)
