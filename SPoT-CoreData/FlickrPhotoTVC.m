@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 #import "Photo.h"
 #import "Recent+Photo.h"
+#import "SharedDocumentHandler.h"
 
 @interface FlickrPhotoTVC ()
 
@@ -47,6 +48,7 @@
     if ([vc respondsToSelector:@selector(setImageURL:)]) {
         Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [Recent recentPhoto:photo];
+        [[SharedDocumentHandler sharedDocumentHandler] saveDocument];
         [vc performSelector:@selector(setImageURL:) withObject:[NSURL URLWithString:photo.imageURL]];
         [vc performSelector:@selector(setTitle:) withObject:photo.title];
     }

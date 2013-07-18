@@ -10,9 +10,22 @@
 
 @interface SharedDocumentHandler()
 
+@property (nonatomic, strong) UIManagedDocument *document;
+
 @end
 
 @implementation SharedDocumentHandler
+
+- (UIManagedDocument *)document
+{
+    if (!_document) {
+        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                             inDomains:NSUserDomainMask] lastObject];
+        url = [url URLByAppendingPathComponent:@"SPoTDocument"];
+        _document = [[UIManagedDocument alloc] initWithFileURL:url];
+    }
+    return _document;
+}
 
 + (SharedDocumentHandler *)sharedDocumentHandler
 {
@@ -26,15 +39,12 @@
 
 - (void)useDocumentWithOperation:(void (^)(BOOL))block
 {
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
-                                                         inDomains:NSUserDomainMask] lastObject];
-    url = [url URLByAppendingPathComponent:@"SPoTDocument"];
-    UIManagedDocument *document = [[UIManagedDocument alloc] initWithFileURL:url];
+    UIManagedDocument *document = self.document;
     //NSLog(@"%@", url);
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[url path]]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[document.fileURL path]]) {
         //NSLog(@"create document");
-        [document saveToURL:url
+        [document saveToURL:document.fileURL
            forSaveOperation:UIDocumentSaveForCreating
           completionHandler:^(BOOL success) {
               self.managedObjectContext = document.managedObjectContext;
@@ -52,6 +62,13 @@
         BOOL success = YES;
         block(success);
     }
+}
+
+- (void)saveDocument
+{
+    [self.document saveToURL:self.document.fileURL
+            forSaveOperation:UIDocumentSaveForOverwriting
+           completionHandler:NULL];
 }
 
 @end

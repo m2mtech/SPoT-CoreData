@@ -66,6 +66,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.refreshControl endRefreshing];
+                [self.sh saveDocument];
             });
         }];
     });
@@ -86,7 +87,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.sh.managedObjectContext) [self.sh useDocumentWithOperation:^(BOOL success) {
+    if (!self.sh.managedObjectContext && !self.refreshControl.refreshing)
+        [self.sh useDocumentWithOperation:^(BOOL success) {
         [self setupFetchedResultsController];
     }];
 }

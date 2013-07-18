@@ -15,5 +15,6 @@
 + (SharedDocumentHandler *)sharedDocumentHandler;
 
 - (void)useDocumentWithOperation:(void (^)(BOOL success))block;
+- (void)saveDocument;
 
 @end
