@@ -25,6 +25,7 @@
     NSError *error;
     Tag *tag;
     NSMutableSet *tags = [NSMutableSet setWithCapacity:[tagStrings count]];
+    tagStrings = [tagStrings arrayByAddingObject:ALL_TAGS_STRING];
     for (NSString *tagString in tagStrings) {
         if (!tagString) continue;
         if ([tagString isEqualToString:@"cs193pspot"]) continue;

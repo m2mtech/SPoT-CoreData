@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 #import "Photo+Flickr.h"
 #import "Recent+Photo.h"
+#import "Tag+Flickr.h"
 #import "SharedDocumentHandler.h"
 
 @interface FlickrPhotoTVC ()
@@ -25,11 +26,18 @@
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title"
                                                                   ascending:YES
                                                                    selector:@selector(localizedCaseInsensitiveCompare:)]];
+        NSString *sectionNameKeyPath = @"firstLetter";        
+        if ([self.tag.name isEqualToString:ALL_TAGS_STRING]) {
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"tagsString"
+                                                                      ascending:YES],
+                                        [request.sortDescriptors lastObject]];
+            sectionNameKeyPath = @"tagsString";
+        }
         request.predicate = [NSPredicate predicateWithFormat:@"%@ in tags", self.tag];
         
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:self.tag.managedObjectContext
-                                                                              sectionNameKeyPath:@"firstLetter"
+                                                                              sectionNameKeyPath:sectionNameKeyPath
                                                                                        cacheName:nil];
     } else {
         self.fetchedResultsController = nil;
@@ -39,7 +47,11 @@
 - (void)setTag:(Tag *)tag
 {
     _tag = tag;
-    self.title = [tag.name capitalizedString];
+    if ([tag.name isEqualToString:ALL_TAGS_STRING]) {
+        self.title = @"All";
+    } else {
+        self.title = [tag.name capitalizedString];
+    }
     [self setupFetchedResultsController];
 }
 

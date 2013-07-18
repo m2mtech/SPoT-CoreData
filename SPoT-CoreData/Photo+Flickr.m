@@ -39,6 +39,10 @@
 
         photo.tags = [Tag tagsFromFlickrInfo:photoDictionary
                       inManagedObjectContext:context];
+        NSArray *tags = [[photo.tags allObjects] sortedArrayUsingComparator:^NSComparisonResult(Tag *tag1, Tag *tag2) {
+            return [tag1.name compare:tag2.name];
+        }];
+        photo.tagsString = [((Tag *)tags[1]).name capitalizedString];
     } else {
         photo = [matches lastObject];
     }

@@ -8,6 +8,8 @@
 
 #import "Tag.h"
 
+#define ALL_TAGS_STRING @"00000"
+
 @interface Tag (Flickr)
 
 + (NSSet *)tagsFromFlickrInfo:(NSDictionary *)photoDictionary

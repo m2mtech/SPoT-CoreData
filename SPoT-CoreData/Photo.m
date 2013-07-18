@@ -13,13 +13,14 @@
 
 @implementation Photo
 
+@dynamic firstLetter;
 @dynamic imageURL;
 @dynamic subtitle;
 @dynamic thumbnail;
 @dynamic thumbnailURL;
 @dynamic title;
 @dynamic unique;
-@dynamic firstLetter;
+@dynamic tagsString;
 @dynamic recent;
 @dynamic tags;
 

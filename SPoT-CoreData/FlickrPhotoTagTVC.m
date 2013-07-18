@@ -9,7 +9,7 @@
 #import "FlickrPhotoTagTVC.h"
 #import "FlickrFetcher.h"
 #import "NetworkActivityIndicator.h"
-#import "Tag.h"
+#import "Tag+Flickr.h"
 #import "Photo+Flickr.h"
 #import "SharedDocumentHandler.h"
 
@@ -119,7 +119,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     Tag *tag = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [tag.name capitalizedString];
+    if ([tag.name isEqualToString:ALL_TAGS_STRING]) {
+        cell.textLabel.text = @"All";
+    } else {
+        cell.textLabel.text = [tag.name capitalizedString];
+    }
     
     int photoCount = [tag.photos count];    
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d photo%@", photoCount, photoCount > 1 ? @"s" : @""];
