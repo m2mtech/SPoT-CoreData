@@ -9,6 +9,7 @@
 #import "Photo+Flickr.h"
 #import "FlickrFetcher.h"
 #import "Tag+Flickr.h"
+#import "Recent.h"
 
 @implementation Photo (Flickr)
 
@@ -43,6 +44,15 @@
     }
     
     return photo;
+}
+
+- (void)delete
+{
+    for (Tag *tag in self.tags) {
+        if ([tag.photos count] == 1) [self.managedObjectContext deleteObject:tag];
+    }
+    self.tags = nil;
+    if (self.recent) [self.managedObjectContext deleteObject:self.recent];
 }
 
 @end

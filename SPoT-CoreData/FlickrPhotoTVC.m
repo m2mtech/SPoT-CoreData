@@ -8,7 +8,7 @@
 
 #import "FlickrPhotoTVC.h"
 #import "FlickrFetcher.h"
-#import "Photo.h"
+#import "Photo+Flickr.h"
 #import "Recent+Photo.h"
 #import "SharedDocumentHandler.h"
 
@@ -101,6 +101,19 @@
 {
     [self sendDataforIndexPath:indexPath
               toViewController:[self.splitViewController.viewControllers lastObject]];
+}
+
+-  (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+ forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [photo.managedObjectContext performBlock:^{
+            [photo delete];
+            [[SharedDocumentHandler sharedDocumentHandler] saveDocument];
+        }];
+    }
 }
 
 @end
