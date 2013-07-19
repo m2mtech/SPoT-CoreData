@@ -32,6 +32,10 @@
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"recent.lastViewed"
                                                                   ascending:NO]];
         request.predicate = [NSPredicate predicateWithFormat:@"recent != nil"];
+        if (self.searchPredicate) {
+            request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[request.predicate, self.searchPredicate]];
+        }
+
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:self.sh.managedObjectContext
                                                                               sectionNameKeyPath:nil

@@ -13,11 +13,48 @@
 #import "Tag+Flickr.h"
 #import "SharedDocumentHandler.h"
 
-@interface FlickrPhotoTVC ()
+@interface FlickrPhotoTVC () <UISearchBarDelegate>
+
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *searchButton;
+@property (nonatomic, strong) UISearchBar *searchBar;
 
 @end
 
 @implementation FlickrPhotoTVC
+
+- (UIBarButtonItem *)searchButton
+{
+    if (!_searchButton) {
+        _searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                                      target:self
+                                                                      action:@selector(searchButtonPressed:)];
+        
+    }
+    return _searchButton;
+}
+
+- (UISearchBar *)searchBar {
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc]
+                      initWithFrame:self.navigationController.navigationBar.frame];
+        self.searchBar.delegate = self;
+    }
+    return _searchBar;
+}
+
+- (IBAction)searchButtonPressed:(id)sender
+{
+    if (self.tableView.tableHeaderView) {
+        self.tableView.tableHeaderView = nil;
+    } else {
+        self.tableView.tableHeaderView = self.searchBar;
+        if (self.searchPredicate) {
+            self.searchPredicate = nil;
+            [self setupFetchedResultsController];
+        }
+        [self.searchBar becomeFirstResponder];
+    }
+}
 
 - (void)setupFetchedResultsController
 {
@@ -34,6 +71,9 @@
             sectionNameKeyPath = @"tagsString";
         }
         request.predicate = [NSPredicate predicateWithFormat:@"%@ in tags", self.tag];
+        if (self.searchPredicate) {
+            request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[request.predicate, self.searchPredicate]];
+        }
         
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:self.tag.managedObjectContext
@@ -77,6 +117,12 @@
             }
         }
     }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = self.searchButton;
 }
 
 #pragma mark - Table view data source
@@ -126,6 +172,23 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
             [[SharedDocumentHandler sharedDocumentHandler] saveDocument];
         }];
     }
+}
+
+#pragma mark - Search delegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if ([searchText length]) {
+        self.searchPredicate = [NSPredicate predicateWithFormat:@"title contains[cd] %@", searchText];
+    } else {
+        self.searchPredicate = nil;
+    }
+    [self setupFetchedResultsController];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    self.tableView.tableHeaderView = nil;
 }
 
 @end

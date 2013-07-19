@@ -13,13 +13,51 @@
 #import "Photo+Flickr.h"
 #import "SharedDocumentHandler.h"
 
-@interface FlickrPhotoTagTVC ()
+@interface FlickrPhotoTagTVC () <UISearchBarDelegate>
 
 @property (strong, nonatomic) SharedDocumentHandler *sh;
+
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *searchButton;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) NSPredicate *searchPredicate;
 
 @end
 
 @implementation FlickrPhotoTagTVC
+
+- (UIBarButtonItem *)searchButton
+{
+    if (!_searchButton) {
+        _searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                                      target:self
+                                                                      action:@selector(searchButtonPressed:)];
+                         
+    }
+    return _searchButton;
+}
+
+- (IBAction)searchButtonPressed:(id)sender
+{
+    if (self.tableView.tableHeaderView) {
+        self.tableView.tableHeaderView = nil;
+    } else {
+        self.tableView.tableHeaderView = self.searchBar;
+        if (self.searchPredicate) {
+            self.searchPredicate = nil;
+            [self setupFetchedResultsController];
+        }
+        [self.searchBar becomeFirstResponder];
+    }
+}
+
+- (UISearchBar *)searchBar {
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc]
+                      initWithFrame:self.navigationController.navigationBar.frame];
+        self.searchBar.delegate = self;
+    }
+    return _searchBar;
+}
 
 - (SharedDocumentHandler *)sh
 {
@@ -33,6 +71,7 @@
 {
     if (self.sh.managedObjectContext) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
+        request.predicate = self.searchPredicate;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
                                                                   ascending:YES
                                                                    selector:@selector(localizedCaseInsensitiveCompare:)]];        
@@ -80,7 +119,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(loadPhotosFromFlickr)
-                  forControlEvents:UIControlEventValueChanged];    
+                  forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.rightBarButtonItem = self.searchButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -132,5 +172,22 @@
 }
 
 #pragma mark - Table view delegate
+
+#pragma mark - Search Display delegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if ([searchText length]) {
+        self.searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
+    } else {
+        self.searchPredicate = nil;
+    }
+    [self setupFetchedResultsController];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    self.tableView.tableHeaderView = nil;
+}
 
 @end
